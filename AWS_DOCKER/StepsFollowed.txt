@@ -1,0 +1,36 @@
+Ayush Ghanekar
+ayush.ghanekar@quantiphi.com
+20783
+
+
+Steps followed:
+
+1) Create a python flask file (index.py)
+2) Write your flask code:
+
+index.py
+
+from flask import Flask
+app = Flask(__name__)
+@app.route("/")
+def hello():
+    return "Hello World!"
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=int("8080"), debug=True)
+
+
+3) Create a Dockerfile (Exposing the 5000 port) (attached)
+4) Create a requirements.txt file and write flask dependency
+5) Now ssh into you AWS EC2 instance and run the following commands:
+	a) docker build --tag file10 .
+	b) docker run --name file11 -p 5000:8080 file10
+
+6) Go to your EC2 instance's security group and allow the http port with respect to your IP.
+7) Since the docker is running in the cloud EC2 instance, to check the flask URL status, use the following command
+	- wget http://127.0.0.1:5000/ (This will give you the status of the website)
+	- curl http://127.0.0.1:5000/ (This will give you the contents of the flask app)
+Note:
+If you port is already in use, Use the following command:
+sudo docker stop $(sudo docker ps -a -q)
+And then rebuild your docker image
+
